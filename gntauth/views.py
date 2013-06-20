@@ -244,8 +244,8 @@ def session(request):
 
     elif request.method == "POST":
 
-        if request.user.is_authenticated():
-            return HttpResponse(u"session already created")
+        #if request.user.is_authenticated():
+        #    return HttpResponse(u"session already created")
 
 
         #should be unique enough and 27 char long
