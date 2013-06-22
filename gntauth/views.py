@@ -21,7 +21,7 @@ from django.utils import simplejson as json
 from random import random
 from threading import Lock
 from time import time
-
+import re
 import logging
 
 logger = logging.getLogger('api.user.view')
@@ -243,10 +243,10 @@ def session(request):
         return HttpResponse(request.session.session_key)
 
     elif request.method == "POST":
-
-        #if request.user.is_authenticated():
-        #    return HttpResponse(u"session already created")
-
+        check = re.compile("T\d+.\d+R\d+.\d+")
+        match = check.match(request.user.username)
+        if request.user.is_authenticated() and match == None:
+            return HttpResponse(u"session already created")
 
         #should be unique enough and 27 char long
         new_user_id = "T%fR%f" % (time(), random())
